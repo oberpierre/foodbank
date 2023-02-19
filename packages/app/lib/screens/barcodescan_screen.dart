@@ -24,6 +24,8 @@ class BarcodescanScreen extends StatelessWidget {
         controller: MobileScannerController(
           facing: CameraFacing.back,
           torchEnabled: false,
+          detectionSpeed: DetectionSpeed.normal,
+          detectionTimeoutMs: 1000,
         ),
         onDetect: (capture) {
           final List<Barcode> barcodes = capture.barcodes;
