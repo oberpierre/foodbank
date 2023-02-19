@@ -1,3 +1,4 @@
+import 'package:app/classes/barcode_painter.dart';
 import 'package:app/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,24 +21,27 @@ class BarcodescanScreen extends StatelessWidget {
         // the App.build method, and use it to set our appbar title.
         title: const Text('Scan Barcode'),
       ),
-      body: MobileScanner(
-        // fit: BoxFit.contain,
-        controller: MobileScannerController(
-          facing: CameraFacing.back,
-          torchEnabled: false,
-          detectionSpeed: DetectionSpeed.normal,
-          detectionTimeoutMs: 1500,
+      body: CustomPaint(
+        foregroundPainter: BarcodePainter(),
+        child: MobileScanner(
+          // fit: BoxFit.contain,
+          controller: MobileScannerController(
+            facing: CameraFacing.back,
+            torchEnabled: false,
+            detectionSpeed: DetectionSpeed.normal,
+            detectionTimeoutMs: 1500,
+          ),
+          onDetect: (capture) {
+            final List<Barcode> barcodes = capture.barcodes;
+            String? barcode = barcodes.elementAt(0).rawValue;
+            if (barcode != null) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailScreen(id: barcode)));
+            }
+          },
         ),
-        onDetect: (capture) {
-          final List<Barcode> barcodes = capture.barcodes;
-          String? barcode = barcodes.elementAt(0).rawValue;
-          if (barcode != null) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DetailScreen(id: barcode)));
-          }
-        },
       ),
     );
   }
