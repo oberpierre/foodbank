@@ -30,9 +30,7 @@ class TestScreen extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(
-        title: 'Barcode scanner',
-      ),
+      home: const HomeScreen(),
     );
   }
 }

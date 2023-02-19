@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Todos'),
+          title: const Text('Foodbank Inventory'),
           actions: [
             IconButton(
                 onPressed: () => Navigator.push(
