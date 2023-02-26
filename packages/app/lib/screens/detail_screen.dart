@@ -1,3 +1,4 @@
+import 'package:app/classes/product_api.dart';
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -12,9 +13,55 @@ class DetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Add product"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(id),
+      body: FutureBuilder(
+        future: ProductApi.findProductByBarcode(id),
+        builder: (context, snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+              const Icon(
+                Icons.check_circle_outline,
+                color: Colors.green,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Result: ${snapshot.data}'),
+              ),
+            ];
+          } else if (snapshot.hasError) {
+            print(snapshot.stackTrace);
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ];
+          } else {
+            children = <Widget>[
+              const SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              ),
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
+        },
       ),
     );
   }
