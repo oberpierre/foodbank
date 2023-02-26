@@ -4,8 +4,15 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-class BarcodescanScreen extends StatelessWidget {
+class BarcodescanScreen extends StatefulWidget {
   const BarcodescanScreen({super.key});
+
+  @override
+  State<BarcodescanScreen> createState() => _BarcodescanScreenState();
+}
+
+class _BarcodescanScreenState extends State<BarcodescanScreen> {
+  bool isOpening = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +36,21 @@ class BarcodescanScreen extends StatelessWidget {
             facing: CameraFacing.back,
             torchEnabled: false,
             detectionSpeed: DetectionSpeed.normal,
-            detectionTimeoutMs: 1500,
+            detectionTimeoutMs: 1000,
           ),
           onDetect: (capture) {
             final List<Barcode> barcodes = capture.barcodes;
             String? barcode = barcodes.elementAt(0).rawValue;
-            if (barcode != null) {
+            if (barcode != null && !isOpening) {
+              isOpening = true;
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetailScreen(id: barcode)));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailScreen(id: barcode)),
+              ).then((value) {
+                isOpening = false;
+                return value;
+              });
             }
           },
         ),
