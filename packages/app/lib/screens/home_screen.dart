@@ -1,4 +1,5 @@
 import 'package:app/screens/barcodescan_screen.dart';
+import 'package:app/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,11 +13,23 @@ class HomeScreen extends StatelessWidget {
           title: const Text('Foodbank Inventory'),
           actions: [
             IconButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BarcodescanScreen())),
-                icon: const Icon(Icons.add_a_photo))
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const DetailScreen(id: ''),
+                ),
+              ),
+              icon: const Icon(Icons.note_add),
+            ),
+            IconButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BarcodescanScreen(),
+                ),
+              ),
+              icon: const Icon(Icons.add_a_photo),
+            )
           ],
         ),
         body: Column());
