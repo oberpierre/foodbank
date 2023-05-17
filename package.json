@@ -2,7 +2,9 @@
   "name": "foodbank-mono-repo",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start:app": "nx run app:run"
+  },
   "private": true,
   "devDependencies": {
     "@nxrocks/nx-flutter": "^5.2.1",
